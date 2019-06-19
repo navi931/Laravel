@@ -14,10 +14,15 @@ class ReservationsController extends Controller
 
   public function categoriesPersonalized()
   {
-    if (isset($_GET['start']))
-    {}
-    $maximo_datos = 10;
-    $table = Category::paginate($maximo_datos);
-    return view('Reservation.categoriesPersonalized')->with('categories',$table);
+    if (isset($_GET['start']) && isset($_GET['return']) && isset($_GET['location']))
+    {
+      $maximo_datos = 10;
+      $table = Category::paginate($maximo_datos);
+      return view('Reservation.categoriesPersonalized')->with('categories',$table);
+    }
+    else
+    {
+      return redirect()->route('reservations.index');
+    }
   }
 }

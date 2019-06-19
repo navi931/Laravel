@@ -57,12 +57,15 @@
   </style>
   <body>
     <form action="{{route('reservations.categoriesPersonalized')}}" method="get">
-      
-      <label for="start">start</label>
-      <input id="start" type="text" name="start">
 
-      <label for="return">return</label>
-      <input id="return" type="text" name="return">
+      <label for="location">Location</label>
+      <input id="location" type="text" name="location" required>
+
+      <label for="start">Start</label>
+      <input id="start" type="text" name="start" required>
+
+      <label for="return">Return</label>
+      <input id="return" type="text" name="return" required>
 
       <button type="submit">GO</button>
     </form>
