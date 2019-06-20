@@ -18,7 +18,9 @@
 Route::get('/',['uses'=>'ReservationsController@index','as'=>'reservations.index']);
 Route::get('/categoriesPersonalized',['uses'=>'ReservationsController@categoriesPersonalized','as'=>'reservations.categoriesPersonalized']);
 
-
+Route::get('/prueba', function () {
+      dd(\App\Location::find(1)->categories);
+ });
 
 Route::get('/categories',['uses'=>'CategoriesController@index','as'=>'cars.index']);
 Route::get('/categories/create','CategoriesController@create');

@@ -12,4 +12,8 @@ class Category extends Model
     {
       return $this->hasMany('\App\Car');
     }
+    public function locations()
+    {
+      return $this->belongsToMany('\App\Location');
+    }
 }

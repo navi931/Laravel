@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 use \App\Category;
+use \App\Location;
+use Validator;
+use App\Http\Requests\ListAvailableCategoriesRequest;
 
 use Illuminate\Http\Request;
 
@@ -9,20 +12,14 @@ class ReservationsController extends Controller
 {
   public function index()
   {
-    return view('Reservation.index');
+    $locations = Location::all();
+    return view('Reservation.index')->with('locations',$locations);;
   }
 
-  public function categoriesPersonalized()
+  public function categoriesPersonalized(ListAvailableCategoriesRequest $request)
   {
-    if (isset($_GET['start']) && isset($_GET['return']) && isset($_GET['location']))
-    {
       $maximo_datos = 10;
-      $table = Category::paginate($maximo_datos);
+      $table = Location::find($_GET['location_start'])->categories;
       return view('Reservation.categoriesPersonalized')->with('categories',$table);
-    }
-    else
-    {
-      return redirect()->route('reservations.index');
-    }
   }
 }
