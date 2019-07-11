@@ -19,7 +19,8 @@ class ReservationsController extends Controller
   public function categoriesPersonalized(ListAvailableCategoriesRequest $request)
   {
       $maximo_datos = 10;
-      $table = Location::find($_GET['location_start'])->categories;
+      $table = Category::all();
+      // $table = Location::find($_GET['location_start'])->categories;
       return view('Reservation.categoriesPersonalized')->with('categories',$table);
   }
 }
