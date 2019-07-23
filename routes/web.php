@@ -19,7 +19,7 @@ Route::get('/',['uses'=>'ReservationsController@index','as'=>'reservations.index
 Route::get('/categoriesPersonalized',['uses'=>'ReservationsController@categoriesPersonalized','as'=>'reservations.categoriesPersonalized']);
 
 Route::get('/prueba', function () {
-      dd(\App\Location::find(1)->categories);
+      dd('laravel works');
  });
 
 Route::get('/categories',['uses'=>'CategoriesController@index','as'=>'cars.index']);

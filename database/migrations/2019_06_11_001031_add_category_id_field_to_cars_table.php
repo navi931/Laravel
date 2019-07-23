@@ -27,8 +27,8 @@ class AddCategoryIdFieldToCarsTable extends Migration
     public function down()
     {
         //
-        Schema::table('cars',function(Blueprint $table){
-          $table->dropColumn('category_id');
-        });
+        // Schema::table('cars',function(Blueprint $table){
+        //   $table->dropColumn('category_id');
+        // });
     }
 }
