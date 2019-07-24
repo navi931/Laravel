@@ -25,7 +25,7 @@ class ListAvailableCategoriesRequest extends FormRequest
     {
         return [
           'start'=>'required|date',
-          'return'=>'required|date|after:start',
+          'end'=>'required|date|after:start',
           'location_start'=>'required',
           'location_end'=>'required',
         ];
