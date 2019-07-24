@@ -8,12 +8,14 @@
       <div>Your init place is {{$location_start->ciudad}}</div>
       <div>Your end place is {{$location_end->ciudad}}</div>
       <div>Your category is {{$category->name}}</div>
+      <div>The price is {{$price}}</div>
 
       <input type="hidden" name="start" value="{{$start}}">
       <input type="hidden" name="end" value="{{$end}}">
       <input type="hidden" name="location_start" value="{{$location_start->id}}">
       <input type="hidden" name="location_end" value="{{$location_end->id}}">
       <input type="hidden" name="category_id" value="{{$category->id}}">
+      <input type="hidden" name="price" value="{{$price}}">
       <label for="name">Your name Please.</label>
       <input type="text" name="name" required>
 

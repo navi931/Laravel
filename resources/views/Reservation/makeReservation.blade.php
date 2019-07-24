@@ -9,6 +9,7 @@
       <div>Your init place is {{$location_start->ciudad}}</div>
       <div>Your end place is {{$location_end->ciudad}}</div>
       <div>Your category is {{$category->name}}</div>
+      <div>The price is {{$price}}</div>
       <button type="submit" name="button">Go to Index</button>
     </form>
 @endsection

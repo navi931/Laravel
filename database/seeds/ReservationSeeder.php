@@ -18,6 +18,7 @@ class ReservationSeeder extends Seeder
           'final_place' => 1,
           'init_date' => '2019/01/01',
           'final_date' => '2019/02/01',
+          'price' => 1000*10,
       ]);
       DB::table('reservations')->insert([
           'name' => 'Juan',
@@ -26,6 +27,7 @@ class ReservationSeeder extends Seeder
           'final_place' => 2,
           'init_date' => '2019/01/03',
           'final_date' => '2019/02/01',
+          'price' => 1000*30,
       ]);
       DB::table('reservations')->insert([
           'name' => 'Pancho',
@@ -34,6 +36,7 @@ class ReservationSeeder extends Seeder
           'final_place' => 3,
           'init_date' => '2019/02/01',
           'final_date' => '2019/02/05',
+          'price' => 1000*20,
       ]);
     }
 }
