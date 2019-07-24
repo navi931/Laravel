@@ -56,6 +56,7 @@ class ReservationsController extends Controller
       'location_end',$location_end)->with(
       'start',$request['start'])->with(
       'end',$request['end'])->with(
-      'reservation',$reservation);
+      'reservation',$reservation)->with(
+      'name',$request['name']);
   }
 }
