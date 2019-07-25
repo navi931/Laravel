@@ -8,8 +8,15 @@
       <div>Your init place is {{$location_start->ciudad}}</div>
       <div>Your end place is {{$location_end->ciudad}}</div>
       <div>Your category is {{$category->name}}</div>
+      <div>Extras</div>
+      @foreach($extras as $extra)
+        <div>{{$extra->name}} {{$extra->cost}} per day</div>
+      @endforeach
       <div>The price is {{$price}}</div>
 
+      @foreach($extras as $extra)
+        <input type="hidden" name="extras[]" value="{{$extra->id}}">
+      @endforeach
       <input type="hidden" name="start" value="{{$start}}">
       <input type="hidden" name="end" value="{{$end}}">
       <input type="hidden" name="location_start" value="{{$location_start->id}}">

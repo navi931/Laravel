@@ -5,7 +5,7 @@
         @foreach($categories as $c)
         <tr>
           <td class="item">
-            <form action="{{route('reservations.check')}}" method="post">
+            <form action="{{route('reservations.extras')}}" method="post">
               {{ csrf_field() }}
               <input type="hidden" name="start" value="{{$start}}">
               <input type="hidden" name="end" value="{{$end}}">

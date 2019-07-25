@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use \App\Category;
 use \App\Location;
 use \App\Reservation;
+use \App\Extra;
 use Validator;
 use DateTime;
 use App\Http\Requests\ListAvailableCategoriesRequest;
@@ -29,24 +30,36 @@ class ReservationsController extends Controller
   }
   public function check(Request $request)
   {
+    $extras = [];
+    $total_extra = 0;
+    foreach ($request['extras'] as $extra)
+    {
+      $extra_temp = Extra::find($extra);
+      array_push ($extras ,$extra_temp);
+      $total_extra += $extra_temp->cost;
+    }
+
     $location_start = Location::find($request['location_start']);
     $location_end = Location::find($request['location_end']);
     $category = Category::find($request['category_id']);
     $start = new DateTime($request['start']);
     $end = new DateTime($request['end']);
     $days = date_diff($start, $end)->days;
-    $price = $days * $category->cost;
+
+    $price = $days * ($total_extra + $category->cost);
     return view('Reservation.check')->with('category',$category)->with(
       'location_start',$location_start)->with(
       'location_end',$location_end)->with(
       'start',$request['start'])->with(
       'end',$request['end'])->with(
-      'price',$price);
+      'price',$price)->with(
+      'extras',$extras);
   }
   public function makeReservation(Request $request)
   {
 
     $category = Category::find($request['category_id']);
+
     $reservation = Reservation::create([
         'name' => $request['name'],
         'category_id' => $request['category_id'],
@@ -57,6 +70,14 @@ class ReservationsController extends Controller
         'price' => $request['price'],
     ]);
 
+    $extras = [];
+    foreach ($request['extras'] as $extra_temp)
+    {
+      $reservation->extras()->attach([$extra_temp]);
+      $extra = Extra::find($extra_temp);
+      array_push ($extras ,$extra);
+    }
+
     $location_start = Location::find($request['location_start']);
     $location_end = Location::find($request['location_end']);
     return view('Reservation.makeReservation')->with('category',$category)->with(
@@ -66,6 +87,21 @@ class ReservationsController extends Controller
       'end',$request['end'])->with(
       'reservation',$reservation)->with(
       'name',$request['name'])->with(
-      'price',$request['price']);
+      'price',$request['price'])->with(
+      'extras',$extras);
+  }
+
+  public function extras(Request $request)
+  {
+
+    $extras = Extra::all();
+
+    return view('Reservation.extras')->with('extras',$extras)->with(
+      'location_start',$request['location_start'])->with(
+      'location_end',$request['location_end'])->with(
+      'start',$request['start'])->with(
+      'end',$request['end'])->with(
+      'name',$request['name'])->with(
+      'category_id',$request['category_id']);
   }
 }

@@ -10,6 +10,9 @@
       <div>Your end place is {{$location_end->ciudad}}</div>
       <div>Your category is {{$category->name}}</div>
       <div>The price is {{$price}}</div>
+      @foreach($extras as $extra)
+        <div>{{$extra->name}} {{$extra->cost}} per day</div>
+      @endforeach
       <button type="submit" name="button">Go to Index</button>
     </form>
 @endsection

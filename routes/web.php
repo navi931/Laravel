@@ -16,6 +16,7 @@ Route::get('/',['uses'=>'ReservationsController@index','as'=>'reservations.index
 Route::post('/categories',['uses'=>'ReservationsController@categories','as'=>'reservations.categories']);
 Route::post('/check',['uses'=>'ReservationsController@check','as'=>'reservations.check']);
 Route::post('/makeReservation',['uses'=>'ReservationsController@makeReservation','as'=>'reservations.makeReservation']);
+Route::post('/extras',['uses'=>'ReservationsController@extras','as'=>'reservations.extras']);
 
 
 
