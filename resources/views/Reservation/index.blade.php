@@ -24,4 +24,12 @@
 
       <button type="submit">GO</button>
     </form>
+    <form action="{{route('reservations.checkReservation')}}" method="post">
+      {{ csrf_field() }}
+      <label for="id_check">Id reservation</label>
+      <input type="text" name="id_check" required>
+      <label for="name">Name</label>
+      <input type="text" name="name" required>
+      <button type="submit" name="button"> Check reservation</button>
+    </form>
 @endsection
