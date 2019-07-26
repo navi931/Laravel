@@ -1,16 +1,25 @@
 @extends('master')
 @section('content')
+<style media="screen">
+table, th, td {
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+</style>
       <div class="title m-b-md">
         Welcome
       </div>
       <h1>Select your type of car</h1>
-      <table>
+      <table style="width:100%">
         <thead>
+          <th>Id</th>
           <th>Name</th>
           <th>Cost</th>
+          <th>Cities</th>
         </thead>
         @foreach($categories as $c)
         <tr>
+          <td class="item"><a href="http://localhost:8000/categories/detail/{{$c->id}}"> {{$c->id}}</a> </td>
           <td class="item"><a href="http://localhost:8000/categories/detail/{{$c->id}}"> {{$c->name}}</a> </td>
           <td class="item"><a href="http://localhost:8000/categories/detail/{{$c->id}}"> {{$c->cost}}</a> </td>
           @foreach($c->locations as $location)
@@ -96,8 +105,4 @@
       */
         echo "http://localhost:8000/categories/create";
         ?>">Agregar</a>
-        <form action="{{route('reservations.index')}}" method="get">
-            {{ csrf_field() }}
-            <button type="submit" name="button">Go to root</button>
-        </form>
 @endsection

@@ -32,8 +32,4 @@
       <input type="text" name="name" required>
       <button type="submit" name="button"> Check reservation</button>
     </form>
-    <form action="{{route('reservations.index')}}" method="get">
-        {{ csrf_field() }}
-        <button type="submit" name="button">Go to root</button>
-    </form>
 @endsection

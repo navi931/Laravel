@@ -10,6 +10,10 @@
 
     <!-- Styles -->
     <style>
+        table, th, td {
+            border: 10px solid black;
+            border-collapse: collapse;
+        }
         html, body {
             background-color: #fff;
             font-family: 'Raleway', sans-serif;
@@ -57,5 +61,12 @@
   </head>
   <body>
     @yield('content')
+    <button onclick="goBack()">Go Back</button>
+
+      <script>
+      function goBack() {
+        window.history.back();
+      }
+</script>
   </body>
 </html>

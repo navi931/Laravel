@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/',['uses'=>'ReservationsController@index','as'=>'reservations.index']);
-
+Route::get('/',['uses'=>'AdminController@index','as'=>'admin.index']);
+Route::post('/reservations',['uses'=>'AdminController@getReservations','as'=>'admin.reservations']);
 
 Route::post('/index',['uses'=>'ReservationsController@client','as'=>'reservations.client']);
 Route::post('/categories',['uses'=>'ReservationsController@categories','as'=>'reservations.categories']);
@@ -20,6 +20,8 @@ Route::post('/check',['uses'=>'ReservationsController@check','as'=>'reservations
 Route::post('/makeReservation',['uses'=>'ReservationsController@makeReservation','as'=>'reservations.makeReservation']);
 Route::post('/extras',['uses'=>'ReservationsController@extras','as'=>'reservations.extras']);
 Route::post('/checkReservation',['uses'=>'ReservationsController@checkReservation','as'=>'reservations.checkReservation']);
+
+Route::post('/admin',['uses'=>'AdminController@menu','as'=>'admin.menu']);
 
 
 
