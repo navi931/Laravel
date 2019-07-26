@@ -11,8 +11,10 @@
 |
 */
 
-
 Route::get('/',['uses'=>'ReservationsController@index','as'=>'reservations.index']);
+
+
+Route::post('/index',['uses'=>'ReservationsController@client','as'=>'reservations.client']);
 Route::post('/categories',['uses'=>'ReservationsController@categories','as'=>'reservations.categories']);
 Route::post('/check',['uses'=>'ReservationsController@check','as'=>'reservations.check']);
 Route::post('/makeReservation',['uses'=>'ReservationsController@makeReservation','as'=>'reservations.makeReservation']);
@@ -25,16 +27,16 @@ Route::get('/prueba', function () {
       dd('laravel works');
  });
  //
- // Route::get('/categories',['uses'=>'CategoriesController@index','as'=>'cars.index']);
- // Route::get('/categories/create','CategoriesController@create');
- // Route::post('/categories/store','CategoriesController@store');
- // Route::get('/categories/detail/{id}','CategoriesController@detail');
- // Route::get('/categories/modify/{id}','CategoriesController@modify');
- // Route::get('/categories/delete/{id}','CategoriesController@delete');
- // Route::post('/categories/update/{id}','CategoriesController@update');
- // Route::get('/cars',['uses'=>'CarsController@index','as'=>'cars.index']);
- // Route::get('/cars/create',['uses'=>'CarsController@create','as'=>'cars.create']);
- // Route::post('/cars',['uses'=>'CarsController@store','as'=>'cars.store']);
+ Route::get('/categories',['uses'=>'CategoriesController@index','as'=>'categories.index']);
+ Route::get('/categories/create','CategoriesController@create');
+ Route::post('/categories/store','CategoriesController@store');
+ Route::get('/categories/detail/{id}','CategoriesController@detail');
+ Route::get('/categories/modify/{id}','CategoriesController@modify');
+ Route::get('/categories/delete/{id}','CategoriesController@delete');
+ Route::post('/categories/update/{id}','CategoriesController@update');
+ Route::get('/cars',['uses'=>'CarsController@index','as'=>'cars.index']);
+ Route::get('/cars/create',['uses'=>'CarsController@create','as'=>'cars.create']);
+ Route::post('/cars',['uses'=>'CarsController@store','as'=>'cars.store']);
 /*
 *{pluralized_entity} -> GET (listados)
 *{pluralized_entity} -> POST (guarda)

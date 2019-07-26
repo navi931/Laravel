@@ -30,9 +30,4 @@ class CarsController extends Controller
     //return header('Location: '.url('http://localhost:8000/cars'));
     return redirect()->route('cars.index');
   }
-
-  public function ($value='') {
-    // code...
-  }
-
 }

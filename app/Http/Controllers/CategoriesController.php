@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use \App\Category;
+use \App\Location;
 
 use Illuminate\Http\Request;
 
@@ -23,7 +24,8 @@ class CategoriesController extends Controller
 
       public function create()
       {
-        return view('categories.create');
+        $locations = Location::all();
+        return view('categories.create')->with('locations',$locations);
       }
       public function store()
       {
@@ -32,14 +34,19 @@ class CategoriesController extends Controller
         $cost = $_POST['cost'];
 
         $data = array('name'=>$name,'passengers'=>$passengers,'cost'=>$cost);
-        Category::insert($data);
+        $category = Category::create($data);
+        foreach ($_POST['location'] as $location)
+        {
+          $category->locations()->attach([$location]);
+        }
         return redirect()->action('CategoriesController@index');
       }
 
       public function modify($id)
       {
-        $table = Category::find($id);
-        return view('categories.modify')->with('category',$table);
+        $locations = Location::all();
+        $category = Category::find($id);
+        return view('categories.modify')->with('category',$category)->with('locations',$locations);
       }
 
       public function delete($id)
@@ -55,10 +62,13 @@ class CategoriesController extends Controller
         $cost = $_POST['cost'];
         $data = array('name'=>$name,'passengers'=>$passengers,'cost'=>$cost);
         Category::where('id',$id)->update($data);
-        return redirect()->action('PrincipalController@index');
+        $category = Category::find($id);
+        $category->locations()->detach();
+        foreach ($_POST['location'] as $location)
+        {
+          $category->locations()->attach([$location]);
+        }
+        return redirect()->action('ReservationsController@index');
       }
-
-
-
 
 }

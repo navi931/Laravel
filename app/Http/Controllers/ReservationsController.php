@@ -5,6 +5,7 @@ use \App\Category;
 use \App\Location;
 use \App\Reservation;
 use \App\Extra;
+use Stripe\Stripe;
 use Validator;
 use DateTime;
 use App\Http\Requests\ListAvailableCategoriesRequest;
@@ -15,8 +16,13 @@ class ReservationsController extends Controller
 {
   public function index()
   {
+    return view('Reservation.index');
+  }
+
+  public function client()
+  {
     $locations = Location::all();
-    return view('Reservation.index')->with('locations',$locations);;
+    return view('Reservation.client')->with('locations',$locations);;
   }
 
   public function categories(ListAvailableCategoriesRequest $request)
@@ -32,11 +38,14 @@ class ReservationsController extends Controller
   {
       $extras = [];
       $total_extra = 0;
-      foreach ($request['extras'] as $extra)
+      if(isset($request['extras']))
       {
-        $extra_temp = Extra::find($extra);
-        array_push ($extras ,$extra_temp);
-        $total_extra += $extra_temp->cost;
+        foreach ($request['extras'] as $extra)
+        {
+          $extra_temp = Extra::find($extra);
+          array_push ($extras ,$extra_temp);
+          $total_extra += $extra_temp->cost;
+        }
       }
 
       $location_start = Location::find($request['location_start']);
@@ -57,6 +66,7 @@ class ReservationsController extends Controller
   }
   public function checkReservation(Request $request)
   {
+
     if($request['id_check'] != 0)
     {
       $reservation = Reservation::find($request['id_check']);
@@ -84,6 +94,19 @@ class ReservationsController extends Controller
   }
   public function makeReservation(Request $request)
   {
+    // Set your secret key: remember to change this to your live secret key in production
+    // See your keys here: https://dashboard.stripe.com/account/apikeys
+    \Stripe\Stripe::setApiKey('sk_test_Svkur5SOXoYBHI4AByFEurNz00T7blpWFe');
+
+    // Token is created using Checkout or Elements!
+    // Get the payment token ID submitted by the form:
+    $token = $request['stripeToken'];
+    $charge = \Stripe\Charge::create([
+      'amount' => $request['price'] * 100,
+      'currency' => 'mxn',
+      'description' => 'Reservation',
+      'source' => $token,
+    ]);
 
       $category = Category::find($request['category_id']);
 
@@ -98,11 +121,14 @@ class ReservationsController extends Controller
       ]);
 
       $extras = [];
-      foreach ($request['extras'] as $extra_temp)
+      if(isset($request['extras']))
       {
-        $reservation->extras()->attach([$extra_temp]);
-        $extra = Extra::find($extra_temp);
-        array_push ($extras ,$extra);
+        foreach ($request['extras'] as $extra_temp)
+        {
+          $reservation->extras()->attach([$extra_temp]);
+          $extra = Extra::find($extra_temp);
+          array_push ($extras ,$extra);
+        }
       }
 
       $location_start = Location::find($request['location_start']);

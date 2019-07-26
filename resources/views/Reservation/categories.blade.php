@@ -13,7 +13,7 @@
               <input type="hidden" name="location_end" value="{{$location_end}}">
               <input type="hidden" name="category_id" value="{{$c->id}}">
               <label for="button{{$c->category_id}}">{{$c->name}}</label>
-              <label for="button{{$c->category_id}}">{{$c->cost}}</label>
+              <label for="button{{$c->category_id}}">${{$c->cost}}</label>
               <button type="submit" name="button{{$c->category_id}}">GO!</button>
             </form>
           </td>
