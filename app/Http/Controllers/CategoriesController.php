@@ -68,7 +68,7 @@ class CategoriesController extends Controller
         {
           $category->locations()->attach([$location]);
         }
-        return redirect()->action('ReservationsController@index');
+        return redirect()->action('CategoriesController@index');
       }
 
 }

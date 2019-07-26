@@ -68,5 +68,8 @@
         window.history.back();
       }
 </script>
+    <form action="{{route('admin.index')}}" method="get">
+      <button type="submit">Go to root</button>
+    </form>
   </body>
 </html>

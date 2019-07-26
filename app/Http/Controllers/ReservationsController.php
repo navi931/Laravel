@@ -88,7 +88,7 @@ class ReservationsController extends Controller
       }
       else
       {
-        return redirect()->route('reservations.index');
+        return redirect()->route('reservations.client');
       }
      }
   }
