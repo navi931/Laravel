@@ -22,7 +22,7 @@ class ReservationsController extends Controller
   public function client()
   {
     $locations = Location::all();
-    return view('Reservation.client')->with('locations',$locations);;
+    return view('Reservation.client')->with('locations',$locations);
   }
 
   public function categories(ListAvailableCategoriesRequest $request)
@@ -91,6 +91,33 @@ class ReservationsController extends Controller
         return redirect()->route('reservations.client');
       }
      }
+     else
+     {
+       return redirect()->route('reservations.client');
+     }
+  }
+  public function deleteReservation(Request $request)
+  {
+    $hours_limit = 5;
+    $reservation_id = $request['reservation_id'];
+    $start = new DateTime($request['start']);
+    $end = new DateTime($request['end']);
+
+    $diff = date_diff($start, $end);
+    $hours = $diff->h;
+    $hours = $hours + ($diff->days*24);
+
+    if($hours > $hours_limit)
+    {
+      $reservation = Reservation::find($reservation_id);
+      $reservation_to_view = $reservation;
+      $reservation->delete();
+      return view('Reservation.deleted')->with('reservation',$reservation_to_view);
+    }
+    else
+    {
+      return redirect()->route('reservations.client');
+    }
   }
   public function makeReservation(Request $request)
   {
@@ -130,7 +157,17 @@ class ReservationsController extends Controller
           array_push ($extras ,$extra);
         }
       }
-
+      ini_set( 'display_errors', 1 );
+      error_reporting( E_ALL );
+      $from = "stevejobs@apple.com";
+      $to = "memovillalobos@gmail.com";//$request['email'];
+      $subject = "Reservation";
+      $message = "You have paid your reservation";
+      // $headers = "From:" . $from;
+      if (mail($to,$subject,$message))
+      {
+        echo "The email message was sent to ".$to;
+      }
       $location_start = Location::find($request['location_start']);
       $location_end = Location::find($request['location_end']);
       return view('Reservation.makeReservation')->with('category',$category)->with(

@@ -10,12 +10,13 @@
 
       <label for="cost">Cost</label>
       <input id="cost" type="text" name="cost" value="{{$category->cost}}">
-      <label for="location">Location</label>
-      @foreach($locations as $location)
-        <input type="checkbox" name="location[]"value="{{$location->id}}" checked="checked">{{$location->ciudad}}
-      @endforeach
+      <div>
+        <label for="location">Location</label>
+        @foreach($locations as $location)
+          <input type="checkbox" name="location[]"value="{{$location->id}}" checked="checked">{{$location->ciudad}}
+        @endforeach
+      </div>
+    <a href="/categories/delete/{{$category->id}}">Delete this record</a>
       <button type="submit">Update</button>
     </form>
-  <a href="/categories/detail/{{$category->id}}">Back</a>
-  <a href="/categories/delete/{{$category->id}}">Delete this record</a>
 @endsection

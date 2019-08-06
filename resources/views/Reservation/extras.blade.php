@@ -11,8 +11,10 @@
       <input type="hidden" name="category_id" value="{{$category_id}}">
       @foreach($extras as $extra)
       <label for="{{$extra->id}}">{{$extra->name}} ${{$extra->cost}}</label>
-      <input type="checkbox" name="extras[]" value="{{$extra->id}}">
+      <input id="{{$extra->id}}" type="checkbox" name="extras[]" value="{{$extra->id}}">
       @endforeach
-      <button type="submit" name="button"> Add Extra </button>
+      <div>
+        <button type="submit" name="button"> Add Extra </button>
+      </div>
     </form>
 @endsection
