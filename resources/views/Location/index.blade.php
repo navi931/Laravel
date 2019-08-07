@@ -16,6 +16,7 @@ table, th, td {
           <th>City</th>
           <th>is_airport</th>
           <th>Address</th>
+          <th>Delete</th>
         </thead>
         @foreach($locations as $l)
         <tr>
@@ -23,10 +24,18 @@ table, th, td {
           <td class="item"><a> {{$l->ciudad}}</a> </td>
           <td class="item"><a> {{$l->is_airport}}</a> </td>
           <td class="item"><a> {{$l->direccion}}</a> </td>
+          <td class="item">
+            <form action="{{route('locations.delete')}}" method="post">
+              {{ csrf_field() }}
+              <button type="submit" name="id" value="{{$l->id}}">Delete</button>
+            </form>
+          </td>
         </tr>
         @endforeach
       </table>
       <form action="{{route('locations.add')}}" method="get">
         <button type="submit">Add</button>
-      </form>
 @endsection
+<form class="" action="index.html" method="post">
+
+</form>

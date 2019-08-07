@@ -22,6 +22,7 @@ class CreateReservationsTable extends Migration
             $table->DateTime('final_date');
             $table->integer('final_place');
             $table->double('price',8,2);
+            $table->integer('is_paid');
         });
     }
 

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reservation extends Model
 {
-    protected $fillable = ['name','category_id','init_date','final_date','init_place','final_place','price'];
+    protected $fillable = ['name','category_id','init_date','final_date','init_place','final_place','price','is_paid'];
     public $timestamps = false;
     public function extras()
     {

@@ -70,31 +70,62 @@ class ReservationsController extends Controller
     if($request['id_check'] != 0)
     {
       $reservation = Reservation::find($request['id_check']);
-      if($reservation->name == $request['name'])
+      if($reservation != null)
       {
-        $location_start = Location::find($reservation->init_place);
-        $location_end = Location::find($reservation->final_place);
-        $category = Category::find($reservation->category_id);
-        return view('Reservation.checkReservation')->with('category',$reservation->category_id)->with(
-          'location_start',$location_start)->with(
-          'location_end',$location_end)->with(
-          'start',$reservation->init_date)->with(
-          'end',$reservation->end_date)->with(
-          'reservation',$reservation)->with(
-          'name',$reservation->name)->with(
-          'price',$reservation->price)->with(
-          'extras',$reservation->extras)->with(
-          'category',$category);
+        if($reservation->name == $request['name'])
+        {
+          $location_start = Location::find($reservation->init_place);
+          $location_end = Location::find($reservation->final_place);
+          $category = Category::find($reservation->category_id);
+          return view('Reservation.checkReservation')->with('category',$reservation->category_id)->with(
+            'location_start',$location_start)->with(
+            'location_end',$location_end)->with(
+            'start',$reservation->init_date)->with(
+            'end',$reservation->end_date)->with(
+            'reservation',$reservation)->with(
+            'name',$reservation->name)->with(
+            'price',$reservation->price)->with(
+            'extras',$reservation->extras)->with(
+            'category',$category);
+        }
       }
       else
       {
         return redirect()->route('reservations.client');
       }
-     }
-     else
-     {
-       return redirect()->route('reservations.client');
-     }
+  }
+}
+  public function pay(Request $request)
+  {
+
+      // Set your secret key: remember to change this to your live secret key in production
+      // See your keys here: https://dashboard.stripe.com/account/apikeys
+      \Stripe\Stripe::setApiKey('sk_test_Svkur5SOXoYBHI4AByFEurNz00T7blpWFe');
+
+      // Token is created using Checkout or Elements!
+      // Get the payment token ID submitted by the form:
+      $token = $request['stripeToken'];
+      $charge = \Stripe\Charge::create([
+        'amount' => $request['price'] * 90,
+        'currency' => 'mxn',
+        'description' => 'Reservation',
+        'source' => $token,
+      ]);
+      $data = array('is_paid'=>1);
+      Reservation::where('id',$request['id'])->update($data);
+
+        ini_set( 'display_errors', 1 );
+        error_reporting( E_ALL );
+        $from = "stevejobs@apple.com";
+        $to = "memovillalobos@gmail.com";//$request['email'];
+        $subject = "Reservation";
+        $message = "You have paid your reservation";
+        // $headers = "From:" . $from;
+        if (mail($to,$subject,$message))
+        {
+          echo "The email message was sent to ".$to;
+        }
+        return redirect()->route('reservations.client');
   }
   public function deleteReservation(Request $request)
   {
@@ -129,7 +160,7 @@ class ReservationsController extends Controller
     // Get the payment token ID submitted by the form:
     $token = $request['stripeToken'];
     $charge = \Stripe\Charge::create([
-      'amount' => $request['price'] * 100,
+      'amount' => $request['price'] * 90,
       'currency' => 'mxn',
       'description' => 'Reservation',
       'source' => $token,
@@ -145,6 +176,7 @@ class ReservationsController extends Controller
           'init_date' => $request['start'],
           'final_date' => $request['end'],
           'price' => $request['price'],
+          'is_paid'=> 1,
       ]);
 
       $extras = [];
@@ -182,6 +214,55 @@ class ReservationsController extends Controller
 
   }
 
+  public function makeReservationnopaid(Request $request)
+  {
+      $category = Category::find($request['category_id']);
+
+      $reservation = Reservation::create([
+          'name' => $request['name'],
+          'category_id' => $request['category_id'],
+          'init_place' => $request['location_start'],
+          'final_place' => $request['location_end'],
+          'init_date' => $request['start'],
+          'final_date' => $request['end'],
+          'price' => $request['price'],
+          'is_paid'=> 0,
+      ]);
+
+      $extras = [];
+      if(isset($request['extras']))
+      {
+        foreach ($request['extras'] as $extra_temp)
+        {
+          $reservation->extras()->attach([$extra_temp]);
+          $extra = Extra::find($extra_temp);
+          array_push ($extras ,$extra);
+        }
+      }
+      ini_set( 'display_errors', 1 );
+      error_reporting( E_ALL );
+      $from = "stevejobs@apple.com";
+      $to = "memovillalobos@gmail.com";//$request['email'];
+      $subject = "Reservation";
+      $message = "You have paid your reservation";
+      // $headers = "From:" . $from;
+      if (mail($to,$subject,$message))
+      {
+        echo "The email message was sent to ".$to;
+      }
+      $location_start = Location::find($request['location_start']);
+      $location_end = Location::find($request['location_end']);
+      return view('Reservation.makeReservation')->with('category',$category)->with(
+        'location_start',$location_start)->with(
+        'location_end',$location_end)->with(
+        'start',$request['start'])->with(
+        'end',$request['end'])->with(
+        'reservation',$reservation)->with(
+        'name',$request['name'])->with(
+        'price',$request['price'])->with(
+        'extras',$extras);
+
+  }
   public function extras(Request $request)
   {
 

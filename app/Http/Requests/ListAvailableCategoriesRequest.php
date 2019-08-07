@@ -24,7 +24,7 @@ class ListAvailableCategoriesRequest extends FormRequest
     public function rules()
     {
         return [
-          'start'=>'required|date',
+          'start'=>'required|date|after:today',
           'end'=>'required|date|after:start',
           'location_start'=>'required',
           'location_end'=>'required',

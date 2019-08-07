@@ -20,6 +20,7 @@ table, th, td {
           <th>init_place</th>
           <th>final_place</th>
           <th>price</th>
+          <th>Paid</th>
           <th>extras</th>
         </thead>
         @foreach($reservations as $reservation)
@@ -32,6 +33,7 @@ table, th, td {
           <td class="item"> {{$reservation->init_place}}</a> </td>
           <td class="item"> {{$reservation->final_place}}</a> </td>
           <td class="item"> {{$reservation->price}}</a> </td>
+          <td class="item"> {{$reservation->is_paid}}</a> </td>
           @foreach($reservation->extras as $extra)
             <td class="item"> {{$extra->name}}</a> </td>
           @endforeach

@@ -1,6 +1,6 @@
 @extends('master')
 @section('content')
-    <form action="{{route('reservations.client')}}" method="post">
+    <form action="{{route('reservations.client')}}" method="get">
       {{ csrf_field() }}
       <h1>This is your reservation id: {{$reservation->id}}</h1>
       <div>Your name is {{$name}}</div>

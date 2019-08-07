@@ -21,6 +21,9 @@ Route::post('/makeReservation',['uses'=>'ReservationsController@makeReservation'
 Route::post('/extras',['uses'=>'ReservationsController@extras','as'=>'reservations.extras']);
 Route::post('/checkReservation',['uses'=>'ReservationsController@checkReservation','as'=>'reservations.checkReservation']);
 Route::post('/deleteReservation',['uses'=>'ReservationsController@deleteReservation','as'=>'reservations.deleteReservation']);
+Route::post('/makeReservationnopaid',['uses'=>'ReservationsController@makeReservationnopaid','as'=>'reservations.makeReservationnopaid']);
+Route::post('/pay',['uses'=>'ReservationsController@pay','as'=>'reservations.pay']);
+
 
 Route::post('/admin',['uses'=>'AdminController@menu','as'=>'admin.menu']);
 
@@ -53,6 +56,7 @@ Route::get('/prueba', function () {
  Route::post('/cars',['uses'=>'CarsController@store','as'=>'cars.store']);
 
  Route::get('/locations',['uses'=>'LocationController@index','as'=>'locations.index']);
+ Route::post('/locationdelete',['uses'=>'LocationController@delete','as'=>'locations.delete']);
  Route::get('/locations/add',['uses'=>'LocationController@add','as'=>'locations.add']);
  Route::post('/locations/store',['uses'=>'LocationController@store','as'=>'locations.store']);
 

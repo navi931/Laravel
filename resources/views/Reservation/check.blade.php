@@ -13,7 +13,7 @@
       @endforeach
 
     <div class="container">
-        <h2 class="my-4 test-center">Payment Test cost ${{$price}} mxn</h2>
+        <h2 class="my-4 test-center">Payment Test cost ${{$price}} mxn Pay now to get 10% discount </h2>
 
         <form action="{{route('reservations.makeReservation')}}" method="post" id="payment-form">
           {{ csrf_field() }}
@@ -36,6 +36,20 @@
                 <div id="card-errors" role="alert"></div>
             </div>
             <button class="btn btn-primary btn-block mt-4">Submit Payment & make Reservation</button>
+        </form>
+        <form action="{{route('reservations.makeReservationnopaid')}}" method="post">
+          {{ csrf_field() }}
+          @foreach($extras as $extra)
+            <input type="hidden" name="extras[]" value="{{$extra->id}}">
+          @endforeach
+          <input type="hidden" name="start" value="{{$start}}">
+          <input type="hidden" name="end" value="{{$end}}">
+          <input type="hidden" name="location_start" value="{{$location_start->id}}">
+          <input type="hidden" name="location_end" value="{{$location_end->id}}">
+          <input type="hidden" name="category_id" value="{{$category->id}}">
+          <input type="hidden" name="price" value="{{$price}}">
+          <input type="text" name="name" placeholder="First Name">
+          <button type="submit" name="button">No paid</button>
         </form>
     </div>
 

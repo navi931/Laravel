@@ -16,10 +16,16 @@ class LocationController extends Controller
     {
       return view('Location.add');
     }
+    public function delete(Request $request)
+    {
+      $location = Location::find($request['id']);
+      $location->delete();
+      return redirect()->action('LocationController@index');
+    }
     public function store(Request $request)
     {
       $city = $request['city'];
-      $airport = $request['airport'];
+      $airport = $request['airport'] || 0;
       $address = $request['address'];
 
       $data = array('ciudad'=>$city,'is_airport'=>$airport,'direccion'=>$address);
